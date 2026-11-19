@@ -26,7 +26,7 @@ create type public.route_status as enum ('planned', 'active', 'completed', 'canc
 create type public.billing_method as enum ('card', 'invoice');
 
 -- ───────────────────────── Helpers ─────────────────────────
-create or replace function public.set_updated_at() returns trigger language plpgsql as $$
+create or replace function public.set_updated_at() returns trigger language plpgsql set search_path = '' as $$
 begin new.updated_at = now(); return new; end $$;
 
 -- ───────────────────────── Identity ─────────────────────────
@@ -552,7 +552,7 @@ create trigger on_auth_user_created after insert on auth.users
 
 -- Prevent users from changing their own role / active flag (only service role may)
 create or replace function public.guard_profile_privileges() returns trigger
-language plpgsql as $$
+language plpgsql set search_path = public as $$
 begin
   if (new.role is distinct from old.role or new.is_active is distinct from old.is_active)
      and coalesce(auth.role(), 'service_role') <> 'service_role' then

@@ -23,7 +23,7 @@ beforeAll(async () => {
   await db.exec(readFileSync(path.join(root, "tests/supabase-stub.sql"), "utf8"));
   for (const f of readdirSync(path.join(root, "supabase/migrations")).sort()) await db.exec(readFileSync(path.join(root, "supabase/migrations", f), "utf8"));
   await db.exec(readFileSync(path.join(root, "supabase/seed.sql"), "utf8"));
-  await db.exec(`grant select, insert, update, delete on all tables in schema public to authenticated; grant execute on all functions in schema public to authenticated;`);
+  await db.exec(`grant select, insert, update, delete on all tables in schema public to authenticated;`);
   for (const [k, id] of Object.entries(ids)) await db.exec(`insert into auth.users (id, email, raw_user_meta_data) values ('${id}', '${k}@example.com', '{"full_name":"${k}"}');`);
   await db.exec(`update public.profiles set role = 'driver' where id = '${ids.driver}'; update public.profiles set role = 'dispatcher' where id = '${ids.dispatcher}';`);
   await db.exec(`insert into public.drivers (id, profile_id, status) values ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', '${ids.driver}', 'approved');`);
