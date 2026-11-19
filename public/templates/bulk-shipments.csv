@@ -1,0 +1,3 @@
+recipient_name,recipient_phone,recipient_email,street,unit,city,province,postal_code,instructions,package_type,description,quantity,weight_kg,length_cm,width_cm,height_cm,service_code,special_handling,pickup_date,pickup_window
+Jane Doe,416-555-0101,jane@example.com,100 King St W,1200,Toronto,ON,M5X 1A9,Front desk,Small box,Printed catalogues,1,2.5,30,20,15,business,,,
+Sam Lee,905-555-0144,,25 Main St,,Mississauga,ON,L5B 1A1,,Medium box,Clothing,2,4,40,30,25,business,fragile;signature_required,,

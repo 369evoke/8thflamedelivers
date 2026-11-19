@@ -1,0 +1,22 @@
+import "server-only";
+
+/** Central place for server env access. Nothing here is ever sent to the browser. */
+export const env = {
+  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+  supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
+  supabaseServiceKey: process.env.SUPABASE_SERVICE_ROLE_KEY ?? "",
+  siteUrl: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),
+  stripeSecret: process.env.STRIPE_SECRET_KEY ?? "",
+  stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET ?? "",
+  resendKey: process.env.RESEND_API_KEY ?? "",
+  emailFrom: process.env.EMAIL_FROM ?? "8th Flame Delivery <no-reply@example.com>",
+  opsEmail: process.env.OPERATIONS_EMAIL ?? "",
+  googleMapsServerKey: process.env.GOOGLE_MAPS_SERVER_KEY ?? "",
+};
+
+export const integrations = {
+  supabase: () => !!(env.supabaseUrl && env.supabaseAnonKey && env.supabaseServiceKey),
+  stripe: () => !!(env.stripeSecret && env.stripeWebhookSecret),
+  email: () => !!env.resendKey,
+  maps: () => !!env.googleMapsServerKey,
+};

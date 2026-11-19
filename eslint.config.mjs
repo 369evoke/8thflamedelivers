@@ -5,6 +5,12 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  {
+    // Server Components (page.tsx) render once per request on the server, so Date.now()
+    // and small local render helpers are safe there. Client components keep the full rules.
+    files: ["src/app/**/page.tsx"],
+    rules: { "react-hooks/purity": "off", "react-hooks/static-components": "off" },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
